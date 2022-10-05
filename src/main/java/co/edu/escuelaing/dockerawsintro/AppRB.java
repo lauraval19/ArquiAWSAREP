@@ -8,14 +8,20 @@ package co.edu.escuelaing.dockerawsintro;
 import static spark.Spark.*;
 
 
-public class SparkWebServer {
+public class AppRB {
     
     public static void main(String... args){
           port(getPort());
-          get("hello", (req,res) -> "Hello Docker!");
-    }
+          staticFiles.location("/public");
+          HttpConnection httPconnection = new HttpConnection();
 
-    private static int getPort() {
+        get("/fachada", (req, res) -> {
+           return "hola";
+        });
+        }
+
+
+        private static int getPort() {
         if (System.getenv("PORT") != null) {
             return Integer.parseInt(System.getenv("PORT"));
         }
