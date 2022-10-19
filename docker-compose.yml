@@ -1,14 +1,6 @@
 version: '2'
 
-
 services:
-  web:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: web
-    ports:
-      - "8087:6000"
   db:
     image: mongo:3.6.1
     container_name: db

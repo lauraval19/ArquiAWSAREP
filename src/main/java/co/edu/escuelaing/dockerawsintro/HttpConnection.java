@@ -23,31 +23,29 @@ import java.util.List;
 public class HttpConnection {
 
     private static final String USER_AGENT = "Mozilla/5.0";
+    private String url = "mongodb://localhost:27017";
 
     public String mongodb(String user) throws IOException, IOException {
-        String connstr ="mongodb+srv://lauraval19:1234@basesmongo.qimhmk2.mongodb.net/?retryWrites=true&w=majority";
+        String connstr = url;
 
         ConnectionString connectionString = new ConnectionString(connstr);
 
         MongoClientSettings settings = MongoClientSettings.builder()
                 .applyConnectionString(connectionString)
-                .serverApi(ServerApi.builder()
-                        .version(ServerApiVersion.V1)
-                        .build())
                 .build();
 
 
         MongoClient mongoClient = MongoClients.create(settings);
 
         List<Document> databases = mongoClient.listDatabases().into(new ArrayList<>());
-        MongoDatabase database = mongoClient.getDatabase("basesmongo");
+        MongoDatabase database = mongoClient.getDatabase("message");
 
         databases.forEach(db -> System.out.println(db.toJson()));
 
-        MongoCollection<Document> customers = database.getCollection("cadenas");
+        MongoCollection<Document> cadenas = database.getCollection("cadena");
 
         //Obtiene un iterable
-        FindIterable<Document> iterable = customers.find();
+        FindIterable<Document> iterable = cadenas.find();
         MongoCursor<Document> cursor = iterable.iterator();
 
         //Recorre el iterador obtenido del iterable
@@ -56,12 +54,12 @@ public class HttpConnection {
             System.out.println(cursor.next());
         }
 
-        Document customer = new Document("_id", new ObjectId());
+        Document cadenan = new Document();
         Date date = Date.from(Instant.now());
-        customer.append("Cadena", user);
-        customer.append("Fecha",date);
+        cadenan.put("Cadena", user);
+        cadenan.put("Fecha",date);
 
-        customers.insertOne(customer);
+        cadenas.insertOne(cadenan);
 
         List<Document> databasesn = mongoClient.listDatabases().into(new ArrayList<>());
         return databasesn.get(0).toJson();
