@@ -16,7 +16,9 @@ public class AppRB {
           HttpConnection httPconnection = new HttpConnection();
 
         get("/fachada", (req, res) -> {
-           return "hola";
+            res.type("application/json");
+            String cadena = req.queryParams("cad");
+            return httPconnection.mongodb(cadena);
         });
         }
 

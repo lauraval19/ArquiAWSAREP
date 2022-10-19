@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="dockerawsintro" />
         <module name="AREP-AWSDOCKERintro-master" />
+        <module name="ArquiAWSAREP" />
       </profile>
     </annotationProcessing>
   </component>
